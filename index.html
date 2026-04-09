@@ -1,57 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-  <title>Laser Beauty</title>
+<meta charset="UTF-8">
+<title>Laser Beauty</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #1c1c1c;
+  color: white;
+}
+
+/* TOPO */
+header {
+  background: linear-gradient(90deg, #5e0cad, #a64dff);
+  padding: 20px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+/* CONTAINER */
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+/* BOXES */
+.card {
+  background: #2b2b2b;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* CHAMADO ATUAL */
+.chamado {
+  border: 3px solid #a64dff;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+}
+
+.chamado h1 {
+  font-size: 50px;
+  margin: 10px 0;
+}
+
+.consultorio {
+  font-size: 30px;
+  color: #ccc;
+}
+
+/* LISTA */
+.lista {
+  margin-top: 20px;
+}
+
+.item {
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+
+/* OFERTAS */
+.oferta {
+  background: linear-gradient(180deg, #2b0a4a, #000);
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.oferta h3 {
+  color: #ffd700;
+}
+
+.preco {
+  font-size: 25px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+</style>
 </head>
-<body style="font-family: Arial;">
 
-<div style="background: purple; color: white; padding: 15px; text-align: center;">
-  Laser Beauty - Chamada de Pacientes
-</div>
+<body>
 
-<div style="padding: 20px;">
-  <input id="nome" placeholder="Nome"><br><br>
-  <input id="consultorio" placeholder="Consultório"><br><br>
-  <button onclick="add()">Chamar</button>
+<header>
+  LASER BEAUTY
+</header>
 
-  <h3>Painel</h3>
-  <div id="lista"></div>
+<div class="container">
+
+  <!-- ESQUERDA -->
+  <div class="card">
+    <h2>Fila de Espera</h2>
+
+    <div class="chamado" id="atual">
+      <div>CHAMADO AGORA</div>
+      <h1 id="nomeAtual">---</h1>
+      <div class="consultorio" id="consultorioAtual">---</div>
+    </div>
+
+    <div class="lista" id="lista"></div>
+  </div>
+
+  <!-- DIREITA -->
+  <div class="card">
+    <h2>Ofertas do Mês</h2>
+
+    <div class="oferta">
+      <h3>Combo Tudão</h3>
+      <p>Axila + Virilha + Pernas</p>
+      <div class="preco">R$ 899,90</div>
+    </div>
+
+    <div class="oferta">
+      <h3>Combo Básico</h3>
+      <p>Axila + Virilha</p>
+      <div class="preco">R$ 699,90</div>
+    </div>
+
+    <div class="oferta">
+      <h3>Combo Premium</h3>
+      <p>Corpo completo</p>
+      <div class="preco">R$ 1.899,90</div>
+    </div>
+
+  </div>
+
 </div>
 
 <script>
 let pacientes = JSON.parse(localStorage.getItem("p")) || [];
 
-function salvar() {
-  localStorage.setItem("p", JSON.stringify(pacientes));
-  render();
-}
+function render() {
+  if (pacientes.length > 0) {
+    document.getElementById("nomeAtual").innerText = pacientes[0].nome;
+    document.getElementById("consultorioAtual").innerText =
+      "Consultório " + pacientes[0].c;
+  }
 
-function add() {
-  let nome = document.getElementById("nome").value;
-  let c = document.getElementById("consultorio").value;
-
-  pacientes.unshift({nome, c});
-  salvar();
-
-  let msg = new SpeechSynthesisUtterance(
-    `Paciente ${nome}, dirigir-se ao consultório ${c}`
-  );
-  speechSynthesis.speak(msg);
-}
-
-function remove(i){
-  pacientes.splice(i,1);
-  salvar();
-}
-
-function render(){
   let html = "";
-  pacientes.forEach((p,i)=>{
-    html += `<div>
-      ${p.nome} - ${p.c}
-      <button onclick="remove(${i})">X</button>
-    </div>`;
+  pacientes.slice(1).forEach(p => {
+    html += `<div class="item">${p.nome} - Consultório ${p.c}</div>`;
   });
+
   document.getElementById("lista").innerHTML = html;
 }
 
