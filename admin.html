@@ -11,97 +11,115 @@
 * { box-sizing: border-box; }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   background: #f3f0f7;
+  height: 100vh; /* Garante que o corpo ocupe a tela toda */
+  display: flex;
+  flex-direction: column;
 }
 
 header {
   background: linear-gradient(90deg, #6a0dad, #a64dff);
   color: white;
-  padding: 15px;
+  padding: 20px;
   text-align: center;
-  font-size: 22px;
+  font-size: 28px; /* Título maior no Windows/Geral */
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
 }
 
 .container {
-  min-height: calc(100vh - 60px);
+  flex: 1; /* Ocupa o restante da tela */
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; /* Centralização vertical real */
   padding: 20px;
 }
 
-/* PC - CENTRALIZADO E MAIOR */
+.card {
+  background: white;
+  padding: 40px; /* Mais respiro interno */
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  width: 100%;
+  max-width: 550px; /* Card de login maior */
+  transition: all 0.3s ease;
+}
+
+/* Ajustes específicos para Desktop (Windows) */
 @media (min-width: 768px) {
-  .card {
-    max-width: 600px;
+  header {
+    font-size: 36px; /* Título bem visível no PC */
+    padding: 30px;
+  }
+  
+  .card h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
   }
 }
 
 /* MOBILE */
 @media (max-width: 600px) {
-  .container {
-    display: block;
-    padding: 15px;
-  }
-}
-
-.card {
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 500px;
-  margin: auto;
-  margin-bottom: 20px;
+  header { font-size: 22px; }
+  .container { align-items: flex-start; padding-top: 40px; }
+  .card { padding: 25px; }
 }
 
 input {
   width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 12px;
   border: 1px solid #ddd;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  margin-top: 15px;
+  padding: 15px;
+  margin-top: 20px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #6a0dad;
   color: white;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #520a85;
 }
 
 .logout {
-  background: red;
+  background: #ff4d4d;
+  margin-top: 10px;
 }
 
 .item {
-  background: #eee;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 10px;
+  background: #f8f5fb;
+  padding: 15px;
+  margin-top: 12px;
+  border-radius: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-left: 5px solid #6a0dad;
 }
 
 .remover {
-  background: red;
-  padding: 5px 10px;
+  background: #ff4d4d;
+  padding: 8px 12px;
   border-radius: 8px;
   color: white;
   cursor: pointer;
+  font-size: 14px;
 }
 
-.hidden { display: none; }
+.hidden { display: none !important; }
 </style>
 </head>
 
@@ -111,31 +129,27 @@ button {
 
 <div class="container">
 
-<!-- LOGIN -->
 <div class="card" id="loginBox">
-  <h3>Login</h3>
-  <input id="email" placeholder="Email">
-  <input id="senha" type="password" placeholder="Senha">
-  <button onclick="login()">Entrar</button>
+  <h3 style="text-align: center; color: #6a0dad;">Acesso Administrativo</h3>
+  <input id="email" placeholder="Seu e-mail">
+  <input id="senha" type="password" placeholder="Sua senha">
+  <button onclick="login()">Entrar no Sistema</button>
 </div>
 
-<!-- SISTEMA -->
-<div id="sistema" class="hidden">
-
-  <div class="card">
-    <h3>Chamar Paciente</h3>
-    <input id="nome" placeholder="Nome do paciente">
-    <input id="consultorio" placeholder="Consultório">
-    <input id="profissional" placeholder="Profissional">
-    <button onclick="add()">Chamar</button>
-    <button class="logout" onclick="logout()">Sair</button>
+<div id="sistema" class="hidden" style="width: 100%; max-width: 800px;">
+  <div class="card" style="margin-bottom: 20px; max-width: 100%;">
+    <h3>Chamar Novo Paciente</h3>
+    <input id="nome" placeholder="Nome completo do paciente">
+    <input id="consultorio" placeholder="Número do Consultório (Ex: 02)">
+    <input id="profissional" placeholder="Nome do Profissional">
+    <button onclick="add()">Chamar Agora</button>
   </div>
 
-  <div class="card">
-    <h3>Fila</h3>
+  <div class="card" style="max-width: 100%;">
+    <h3>Fila de Chamada Recente</h3>
     <div id="lista"></div>
+    <button class="logout" onclick="logout()">Sair do Painel</button>
   </div>
-
 </div>
 
 </div>
@@ -161,9 +175,9 @@ async function login() {
   });
 
   if (error) {
-    alert("Erro: " + error.message);
+    alert("Erro ao entrar: Verifique suas credenciais.");
   } else {
-    document.getElementById("loginBox").style.display = "none";
+    document.getElementById("loginBox").classList.add("hidden");
     document.getElementById("sistema").classList.remove("hidden");
     carregar();
   }
@@ -180,46 +194,61 @@ async function add() {
   const profissional = document.getElementById("profissional").value;
 
   if (!nome || !consultorio || !profissional) {
-    alert("Preencha todos os campos");
+    alert("Preencha todos os campos antes de chamar.");
     return;
   }
 
-  await supabaseClient.from("pacientes").insert([
+  const { error } = await supabaseClient.from("pacientes").insert([
     { nome, consultorio, profissional }
   ]);
 
-  document.getElementById("nome").value = "";
-  document.getElementById("consultorio").value = "";
-  document.getElementById("profissional").value = "";
+  if (error) {
+    alert("Erro ao registrar no banco de dados.");
+  } else {
+    // Limpa campos
+    document.getElementById("nome").value = "";
+    document.getElementById("consultorio").value = "";
+    document.getElementById("profissional").value = "";
+    
+    // Atualiza a fila imediatamente para feedback visual
+    carregar();
+  }
 }
 
 async function remover(id) {
   await supabaseClient.from("pacientes").delete().eq("id", id);
+  carregar();
 }
 
 async function carregar() {
-  const { data } = await supabaseClient
+  const { data, error } = await supabaseClient
     .from("pacientes")
     .select("*")
     .order("created_at", { ascending: false });
+
+  if (error) return;
 
   let html = "";
   data.forEach(p => {
     html += `
       <div class="item">
-        <span>${p.nome} - ${p.consultorio} (${p.profissional})</span>
-        <span class="remover" onclick="remover('${p.id}')">X</span>
+        <div>
+            <strong>${p.nome}</strong><br>
+            <small>Consultório: ${p.consultorio} | Dr(a): ${p.profissional}</small>
+        </div>
+        <span class="remover" onclick="remover('${p.id}')">Excluir</span>
       </div>
     `;
   });
 
-  document.getElementById("lista").innerHTML = html;
+  document.getElementById("lista").innerHTML = html || "<p style='color:gray'>Nenhum paciente na fila.</p>";
 }
 
+// Atualização automática a cada 3 segundos
 setInterval(() => {
   const sistemaVisivel = !document.getElementById("sistema").classList.contains("hidden");
   if (sistemaVisivel) carregar();
-}, 2000);
+}, 3000);
 </script>
 
 </body>
