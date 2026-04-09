@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laser Beauty - Painel TV Amplo</title>
+<title>Laser Beauty - Painel TV Detalhado</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -15,7 +15,7 @@ body {
   background: #f3f0f7;
   color: #333;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  overflow: hidden;
+  overflow: hidden; /* Evita rolagem na TV */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,9 +23,9 @@ body {
 
 header {
   background: linear-gradient(90deg, #6a0dad, #a64dff);
-  padding: 15px;
+  padding: 10px;
   text-align: center;
-  font-size: 60px;
+  font-size: 55px;
   font-weight: bold;
   color: white;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
@@ -33,43 +33,44 @@ header {
 
 .container {
   display: grid;
-  grid-template-columns: 3fr 1fr; /* 75% para chamadas e 25% para promoções */
-  gap: 20px;
-  padding: 20px;
+  /* Foco total no paciente (75%), promos estreitas (25%) */
+  grid-template-columns: 3fr 1fr;
+  gap: 15px;
+  padding: 15px;
   flex: 1;
 }
 
 .card {
   background: white;
-  padding: 30px;
-  border-radius: 40px;
+  padding: 20px;
+  border-radius: 35px;
   box-shadow: 0 5px 25px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
 }
 
-/* LADO ESQUERDO - FOCO TOTAL NO PACIENTE */
+/* LADO ESQUERDO - PACIENTE EM DESTAQUE */
 .chamado-principal {
-  flex: 1.5; /* Dá mais peso vertical ao destaque */
+  flex: 1; /* Ocupa o máximo de espaço vertical */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 12px solid #a64dff;
-  border-radius: 45px;
-  margin: 10px 0 25px 0;
+  border: 10px solid #a64dff;
+  border-radius: 40px;
+  margin: 10px 0 20px 0;
   background: #fff;
   animation: pulso 2s infinite;
 }
 
 @keyframes pulso {
   0% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0.4); }
-  70% { box-shadow: 0 0 0 40px rgba(166, 77, 255, 0); }
+  70% { box-shadow: 0 0 0 35px rgba(166, 77, 255, 0); }
   100% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0); }
 }
 
 #nome { 
-    font-size: 130px; /* Nome massivo para ocupar a tela */
+    font-size: 110px; /* Nome gigante */
     margin: 0; 
     text-align: center; 
     line-height: 1; 
@@ -78,28 +79,28 @@ header {
 }
 
 .info-destaque { 
-    font-size: 65px; 
+    font-size: 55px; 
     color: #6a0dad; 
     font-weight: bold; 
-    margin-top: 20px; 
+    margin-top: 15px; 
 }
 
 .titulo-ultimos {
     color: #6a0dad;
-    font-size: 32px;
-    margin-bottom: 15px;
+    font-size: 28px;
+    margin-bottom: 10px;
     font-weight: bold;
     text-transform: uppercase;
     border-bottom: 3px solid #f3f0f7;
 }
 
 .lista-item {
-  padding: 15px 0;
+  padding: 10px 0;
   border-bottom: 2px solid #f3f0f7;
   display: flex;
   justify-content: space-between;
-  font-size: 45px; /* Aumentado para visibilidade */
-  color: #666;
+  font-size: 38px; /* Lista secundária bem visível */
+  color: #777;
   font-weight: 600;
 }
 
@@ -108,62 +109,76 @@ header {
     font-weight: bold;
 }
 
-/* LADO DIREITO - FILEIRA DE PROMOÇÕES */
+/* LADO DIREITO - FILEIRA ESTREITA DE PROMOÇÕES */
 .ofertas {
   text-align: right; 
-  padding: 20px;
+  padding: 15px;
   justify-content: space-between; /* Espalha as promos verticalmente */
+  border-right: 15px solid #6a0dad; /* Detalhe roxo no canto */
 }
 
 .ofertas h2 {
-    font-size: 32px;
+    font-size: 28px;
     margin-top: 0;
     color: #6a0dad;
     border-bottom: 2px solid #eee;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
+    text-align: center;
 }
 
 .promo-item {
-  border-right: 10px solid #6a0dad; 
-  padding-right: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  text-align: left; /* Descrições alinhadas à esquerda para leitura */
 }
 
 .promo-item strong {
-  font-size: 28px;
+  font-size: 24px;
   color: #6a0dad;
   display: block;
+  text-transform: uppercase;
+  text-align: center; /* Títulos centralizados */
 }
 
 .promo-item small {
-  font-size: 18px;
+  font-size: 16px; /* Fonte menor para caber toda a descrição */
   color: #555;
   display: block;
+  margin: 5px 0;
+}
+
+.preco-real {
+    color: #999;
+    font-size: 16px;
+    text-decoration: line-through;
+    display: block;
+    text-align: center;
 }
 
 .preco-destaque {
-  font-size: 38px;
+  font-size: 32px;
   color: #27ae60;
   font-weight: bold;
+  display: block;
+  text-align: center;
 }
 
-/* LETREIRO */
+/* LETREIRO ROXO */
 .letreiro {
     background: #6a0dad;
     color: white;
-    padding: 15px;
-    font-size: 22px;
+    padding: 12px;
+    font-size: 18px;
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
-    border-radius: 20px;
-    margin-top: 10px;
+    border-radius: 15px;
+    margin-top: auto;
 }
 
 .letreiro span {
     display: inline-block;
     padding-left: 100%;
-    animation: moverLetreiro 30s linear infinite;
+    animation: moverLetreiro 35s linear infinite;
 }
 
 @keyframes moverLetreiro {
@@ -180,7 +195,7 @@ header {
 <div class="container">
 
   <div class="card">
-    <h2 style="color: #6a0dad; font-size: 35px; margin: 0 0 10px 0;">Chamando agora:</h2>
+    <h2 style="color: #6a0dad; font-size: 32px; margin: 0 0 5px 0;">Chamando agora:</h2>
     
     <div class="chamado-principal">
       <h1 id="nome">...</h1>
@@ -195,23 +210,26 @@ header {
 
   <div class="card ofertas">
     <div>
-        <h2>Combos</h2>
+        <h2>Combos de Depilação</h2>
         
         <div class="promo-item">
             <strong>TUDÃO</strong>
-            <small>Completo</small>
+            <small>10ss Axila + Buço + Virilha + Perianal + Pernas inteiras</small>
+            <span class="preco-real">De R$ 2.500,00</span>
             <span class="preco-destaque">10x 89,99</span>
         </div>
 
         <div class="promo-item">
             <strong>BÁSICO</strong>
-            <small>Essencial</small>
+            <small>10ss Axila + Virilha + Perianal</small>
+            <span class="preco-real">De R$ 1.300,00</span>
             <span class="preco-destaque">10x 69,99</span>
         </div>
 
         <div class="promo-item">
             <strong>PREMIUM</strong>
-            <small>Full Body</small>
+            <small>10ss Axila + Virilha + Perianal + Pernas inteiras + Face + Glúteo + Dedos + Linha Alba + Braços + Abdomen</small>
+            <span class="preco-real">De R$ 4.000,00</span>
             <span class="preco-destaque">10x 189,99</span>
         </div>
     </div>
@@ -237,7 +255,7 @@ async function carregar() {
       .from("pacientes")
       .select("*")
       .order("created_at", { ascending: false })
-      .limit(4); // Reduzi para 4 para manter os nomes grandes sem scroll
+      .limit(4); 
 
     if (error) throw error;
 
