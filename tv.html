@@ -29,15 +29,39 @@ header {
   font-weight: bold;
   color: white;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+/* NOVO POSICIONAMENTO DO LETREIRO */
+.letreiro {
+    background: #6a0dad;
+    color: white;
+    padding: 10px 0;
+    font-size: 26px; /* Aumentado levemente para destaque no topo */
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    border-bottom: 4px solid #a64dff;
+}
+
+.letreiro span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: moverLetreiro 30s linear infinite; /* Velocidade levemente ajustada */
+}
+
+@keyframes moverLetreiro {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
 }
 
 .container {
   display: grid;
-  /* Reduzi a lateral para 0.8fr para ficar bem estreito e dar espaço ao texto gigante */
   grid-template-columns: 6.2fr 0.8fr; 
   gap: 15px;
   padding: 15px;
   flex: 1;
+  overflow: hidden;
 }
 
 .card {
@@ -49,7 +73,7 @@ header {
   flex-direction: column;
 }
 
-/* LADO ESQUERDO - PAINEL DE CHAMADA */
+/* LADO ESQUERDO */
 .chamado-principal {
   flex: 1;
   display: flex;
@@ -104,18 +128,17 @@ header {
   font-weight: 600;
 }
 
-/* LADO DIREITO - PROMOÇÕES (MUITO ESTREITO) */
+/* LADO DIREITO - PROMOÇÕES */
 .ofertas {
   padding: 10px;
   border-right: 15px solid #6a0dad;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  overflow: hidden;
 }
 
 .ofertas h2 {
-    font-size: 35px; /* Título maior */
+    font-size: 35px;
     margin-top: 0;
     color: #6a0dad;
     border-bottom: 5px solid #6a0dad;
@@ -127,7 +150,7 @@ header {
 .combos-lista {
     display: flex;
     flex-direction: column;
-    gap: 40px; 
+    gap: 40px;
     margin-top: 20px;
 }
 
@@ -138,15 +161,13 @@ header {
 }
 
 .promo-item strong {
-  font-size: 30px; /* Nome do Combo maior */
+  font-size: 30px;
   color: #6a0dad;
   display: block;
   text-transform: uppercase;
-  margin-bottom: 10px;
   line-height: 1;
 }
 
-/* Letra das descrições agora com 42px para ocupar várias linhas */
 .promo-item small {
   font-size: 42px; 
   color: #000;
@@ -154,39 +175,14 @@ header {
   margin: 15px 0;
   line-height: 1.1;
   font-weight: 800;
-  word-wrap: break-word; /* Garante que as palavras quebrem se necessário */
+  word-wrap: break-word;
 }
 
 .preco-destaque {
-  font-size: 45px; /* Preço bem grande */
+  font-size: 45px;
   color: #27ae60;
   font-weight: 900;
   display: block;
-  margin-top: 10px;
-}
-
-/* LETREIRO */
-.letreiro {
-    background: #6a0dad;
-    color: white;
-    padding: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    border-radius: 15px;
-    margin-top: auto;
-}
-
-.letreiro span {
-    display: inline-block;
-    padding-left: 100%;
-    animation: moverLetreiro 35s linear infinite;
-}
-
-@keyframes moverLetreiro {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
 }
 </style>
 </head>
@@ -194,6 +190,10 @@ header {
 <body>
 
 <header>LASER BEAUTY</header>
+
+<div class="letreiro">
+    <span>Participe do sorteio da cesta de chocolates e um botox! Indique amigos e ganhe cupons para concorrer.</span>
+</div>
 
 <div class="container">
 
@@ -230,10 +230,6 @@ header {
             <small>CORPO INTEIRO</small>
             <span class="preco-destaque">10x 189,99</span>
         </div>
-    </div>
-
-    <div class="letreiro">
-        <span>Participe do sorteio da cesta de chocolates e um botox! Indique amigos e ganhe cupons.</span>
     </div>
   </div>
 
