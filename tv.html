@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laser Beauty - Painel TV Detalhado</title>
+<title>Laser Beauty - Painel TV Otimizado</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -15,7 +15,7 @@ body {
   background: #f3f0f7;
   color: #333;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  overflow: hidden; /* Evita rolagem na TV */
+  overflow: hidden;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -33,8 +33,8 @@ header {
 
 .container {
   display: grid;
-  /* Foco total no paciente (75%), promos estreitas (25%) */
-  grid-template-columns: 3fr 1fr;
+  /* Quadro de promoções ainda mais estreito horizontalmente */
+  grid-template-columns: 3.5fr 1fr;
   gap: 15px;
   padding: 15px;
   flex: 1;
@@ -49,9 +49,9 @@ header {
   flex-direction: column;
 }
 
-/* LADO ESQUERDO - PACIENTE EM DESTAQUE */
+/* LADO ESQUERDO */
 .chamado-principal {
-  flex: 1; /* Ocupa o máximo de espaço vertical */
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -70,7 +70,7 @@ header {
 }
 
 #nome { 
-    font-size: 110px; /* Nome gigante */
+    font-size: 110px;
     margin: 0; 
     text-align: center; 
     line-height: 1; 
@@ -99,7 +99,7 @@ header {
   border-bottom: 2px solid #f3f0f7;
   display: flex;
   justify-content: space-between;
-  font-size: 38px; /* Lista secundária bem visível */
+  font-size: 38px;
   color: #777;
   font-weight: 600;
 }
@@ -109,16 +109,16 @@ header {
     font-weight: bold;
 }
 
-/* LADO DIREITO - FILEIRA ESTREITA DE PROMOÇÕES */
+/* LADO DIREITO - PROMOÇÕES MAIS ESTREITAS */
 .ofertas {
   text-align: right; 
   padding: 15px;
-  justify-content: space-between; /* Espalha as promos verticalmente */
-  border-right: 15px solid #6a0dad; /* Detalhe roxo no canto */
+  justify-content: space-between;
+  border-right: 15px solid #6a0dad;
 }
 
 .ofertas h2 {
-    font-size: 28px;
+    font-size: 26px;
     margin-top: 0;
     color: #6a0dad;
     border-bottom: 2px solid #eee;
@@ -128,7 +128,7 @@ header {
 
 .promo-item {
   margin-bottom: 15px;
-  text-align: left; /* Descrições alinhadas à esquerda para leitura */
+  text-align: left;
 }
 
 .promo-item strong {
@@ -136,14 +136,15 @@ header {
   color: #6a0dad;
   display: block;
   text-transform: uppercase;
-  text-align: center; /* Títulos centralizados */
+  text-align: center;
 }
 
 .promo-item small {
-  font-size: 16px; /* Fonte menor para caber toda a descrição */
-  color: #555;
+  font-size: 19px; /* Descrição aumentada conforme solicitado */
+  color: #444;
   display: block;
-  margin: 5px 0;
+  margin: 8px 0;
+  line-height: 1.2;
 }
 
 .preco-real {
@@ -155,19 +156,19 @@ header {
 }
 
 .preco-destaque {
-  font-size: 32px;
+  font-size: 34px;
   color: #27ae60;
   font-weight: bold;
   display: block;
   text-align: center;
 }
 
-/* LETREIRO ROXO */
+/* LETREIRO */
 .letreiro {
     background: #6a0dad;
     color: white;
     padding: 12px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
@@ -196,12 +197,10 @@ header {
 
   <div class="card">
     <h2 style="color: #6a0dad; font-size: 32px; margin: 0 0 5px 0;">Chamando agora:</h2>
-    
     <div class="chamado-principal">
       <h1 id="nome">...</h1>
       <div id="info" class="info-destaque"></div>
     </div>
-    
     <div>
       <div class="titulo-ultimos">Últimos chamados:</div>
       <div id="lista"></div>
@@ -210,7 +209,7 @@ header {
 
   <div class="card ofertas">
     <div>
-        <h2>Combos de Depilação</h2>
+        <h2>Combos</h2>
         
         <div class="promo-item">
             <strong>TUDÃO</strong>
@@ -228,7 +227,7 @@ header {
 
         <div class="promo-item">
             <strong>PREMIUM</strong>
-            <small>10ss Axila + Virilha + Perianal + Pernas inteiras + Face + Glúteo + Dedos + Linha Alba + Braços + Abdomen</small>
+            <small>10ss Axila + Virilha + Perianal + Pernas + Face + Glúteo + Dedos + Linha Alba + Braços + Abdomen</small>
             <span class="preco-real">De R$ 4.000,00</span>
             <span class="preco-destaque">10x 189,99</span>
         </div>
@@ -261,19 +260,13 @@ async function carregar() {
 
     if (data && data.length > 0) {
       const atual = data[0];
-      
       document.getElementById("nome").innerText = atual.nome;
       document.getElementById("info").innerText = `SALA ${atual.consultorio} - ${atual.profissional}`;
 
       let html = "";
       const filaSecundaria = data.slice(1); 
-      
       filaSecundaria.forEach(p => {
-        html += `
-          <div class="lista-item">
-            <span>${p.nome}</span>
-            <span>SALA ${p.consultorio}</span>
-          </div>`;
+        html += `<div class="lista-item"><span>${p.nome}</span><span>SALA ${p.consultorio}</span></div>`;
       });
       document.getElementById("lista").innerHTML = html;
 
@@ -290,7 +283,10 @@ function falarHumano(p) {
   const texto = `${p.nome}. Consultório ${p.consultorio}. Profissional ${p.profissional}.`;
   const msg = new SpeechSynthesisUtterance(texto);
   msg.lang = 'pt-BR';
-  msg.rate = 0.8; 
+  
+  // VELOCIDADE AUMENTADA: de 0.8 para 1.1
+  msg.rate = 1.1; 
+  msg.pitch = 1.0;
 
   const vozes = window.speechSynthesis.getVoices();
   const vozHumana = vozes.find(v => v.lang === 'pt-BR' && (v.name.includes('Google') || v.name.includes('Natural')));
