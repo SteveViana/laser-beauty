@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laser Beauty - Painel TV (Voz)</title>
+<title>Laser Beauty - Painel TV (Voz Curta)</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -23,7 +23,7 @@ body {
 
 header {
   background: linear-gradient(90deg, #6a0dad, #a64dff); /* Mesma cor do painel admin */
-  padding: 30px;
+  padding: 25px;
   text-align: center;
   font-size: 50px;
   font-weight: bold;
@@ -34,17 +34,17 @@ header {
 
 .container {
   display: grid;
-  grid-template-columns: 2.5fr 1fr;
-  gap: 30px;
-  padding: 40px;
+  grid-template-columns: 2.2fr 1fr;
+  gap: 25px;
+  padding: 30px;
   flex: 1;
 }
 
 .card {
   background: white; /* Mesma cor dos cards do painel admin */
-  padding: 30px;
-  border-radius: 30px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
 }
@@ -52,10 +52,10 @@ header {
 h2 {
   color: #6a0dad; /* Roxo principal do painel admin */
   text-transform: uppercase;
-  font-size: 28px;
+  font-size: 26px;
   margin-top: 0;
   border-bottom: 2px solid #eee;
-  padding-bottom: 15px;
+  padding-bottom: 12px;
 }
 
 .chamado-principal {
@@ -65,55 +65,98 @@ h2 {
   justify-content: center;
   align-items: center;
   border: 5px solid #a64dff; /* Roxo mais claro para destaque */
-  border-radius: 25px;
+  border-radius: 20px;
   background: white;
-  margin: 20px 0;
+  margin: 15px 0;
   animation: pulso 2s infinite;
 }
 
 @keyframes pulso {
   0% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0.2); }
-  70% { box-shadow: 0 0 0 30px rgba(166, 77, 255, 0); }
+  70% { box-shadow: 0 0 0 25px rgba(166, 77, 255, 0); }
   100% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0); }
 }
 
 .chamado-principal h1 {
-  font-size: 90px;
+  font-size: 85px;
   margin: 0;
   color: #333;
   text-align: center;
 }
 
 .info-destaque {
-  font-size: 45px;
+  font-size: 40px;
   color: #6a0dad;
   font-weight: bold;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .lista-espera {
-  margin-top: 20px;
-  font-size: 24px;
+  margin-top: 15px;
+  font-size: 22px;
 }
 
 .lista-item {
-  padding: 15px;
+  padding: 12px;
   border-bottom: 1px solid #eee;
   display: flex;
   justify-content: space-between;
   color: #666;
 }
 
+/* --- ESTILOS DAS OFERTAS --- */
 .ofertas p {
-  font-size: 32px;
-  margin: 20px 0;
-  padding: 15px;
+  font-size: 18px;
+  margin: 15px 0;
+  padding: 12px;
   background: #f8f5fb;
-  border-radius: 15px;
-  text-align: center;
-  border-left: 8px solid #6a0dad;
+  border-radius: 12px;
+  text-align: left;
+  border-left: 6px solid #6a0dad;
   color: #333;
 }
+
+.ofertas p strong {
+    font-size: 20px;
+    color: #6a0dad;
+}
+
+.preco-real {
+    color: #666;
+    font-size: 16px;
+    text-decoration: line-through;
+}
+
+.preco-destaque {
+    font-size: 24px;
+    color: #00ff88; /* Verde para o preço em parcelas */
+    font-weight: bold;
+}
+
+/* --- ESTILOS DO LETREIRO --- */
+.letreiro {
+    background: #6a0dad; /* Fundo roxo */
+    color: white;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap; /* Impede que o texto quebre */
+    overflow: hidden; /* Esconde o texto que sai da tela */
+    position: relative;
+    border-radius: 10px;
+}
+
+.letreiro span {
+    display: inline-block;
+    padding-left: 100%; /* Começa fora da tela à direita */
+    animation: moverLetreiro 20s linear infinite; /* Animação contínua */
+}
+
+@keyframes moverLetreiro {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); } /* Move tudo para a esquerda */
+}
+
 </style>
 </head>
 
@@ -131,17 +174,39 @@ h2 {
       <div id="info" class="info-destaque"></div>
     </div>
 
-    <div style="margin-top: 20px;">
-      <h3 style="color: #bbb;">Últimos chamados:</h3>
+    <div style="margin-top: 15px;">
+      <h3 style="color: #bbb; margin-bottom: 5px;">Últimos chamados:</h3>
       <div id="lista" class="lista-espera"></div>
     </div>
   </div>
 
   <div class="card ofertas">
-    <h2>Ofertas Especiais</h2>
-    <p>Combo Básico<br><strong style="color: #6a0dad;">R$ 699</strong></p>
-    <p>Combo Premium<br><strong style="color: #6a0dad;">R$ 899</strong></p>
-    <p>Limpeza Especial<br><strong style="color: #6a0dad;">R$ 199</strong></p>
+    <h2>Combos de Depilação</h2>
+    
+    <p>
+        <strong>Combo TUDÃO</strong><br>
+        <small>Axila, Buço, Virilha, Perianal, Pernas inteiras</small><br>
+        <span class="preco-real">De R$ 2.500,00</span><br>
+        <span class="preco-destaque">10x R$ 89,99</span>
+    </p>
+
+    <p>
+        <strong>Combo BÁSICO</strong><br>
+        <small>Axila, Virilha, Perianal</small><br>
+        <span class="preco-real">De R$ 1.300,00</span><br>
+        <span class="preco-destaque">10x R$ 69,99</span>
+    </p>
+
+    <p>
+        <strong>Combo PREMIUM</strong><br>
+        <small>Axila, Virilha, Perianal, Pernas inteiras, Face, Glúteo, Dedos, Linha Alba, Braços, Abdomen</small><br>
+        <span class="preco-real">De R$ 4.000,00</span><br>
+        <span class="preco-destaque">10x R$ 189,99</span>
+    </p>
+
+    <div class="letreiro">
+        <span>Não deixe de participar do sorteio da cesta de chocolates e um botox. Para cada pessoa indicada você ganha 1 papel do sorteio.</span>
+    </div>
   </div>
 
 </div>
@@ -190,11 +255,11 @@ async function carregar() {
       });
       document.getElementById("lista").innerHTML = html;
 
-      // LÓGICA DA VOZ:
+      // LÓGICA DA VOZ (SIMPLIFICADA E DIRETA):
       // Verifica se o paciente atual é diferente do último que "falamos"
       if (pacienteAtual.id !== ultimoIdChamado) {
         // Se for um novo paciente, fala o nome dele
-        falarNomePaciente(pacienteAtual);
+        falarNomePacienteDireto(pacienteAtual);
         // Atualiza o ID armazenado
         ultimoIdChamado = pacienteAtual.id;
       }
@@ -204,12 +269,12 @@ async function carregar() {
   }
 }
 
-function falarNomePaciente(paciente) {
+function falarNomePacienteDireto(paciente) {
   // Cancela qualquer fala que esteja em andamento para não encavalar
   window.speechSynthesis.cancel();
 
-  // Cria a frase que será dita
-  const frase = `Atenção: ${paciente.nome}. Por favor, comparecer ao Consultório ${paciente.consultorio}, com Doutor ou Doutora ${paciente.profissional}.`;
+  // Cria a frase que será dita (Simplificada e Direta)
+  const frase = `${paciente.nome}, consultório ${paciente.consultorio}, profissional ${paciente.profissional}`;
   
   // Cria o objeto de fala
   const utterance = new SpeechSynthesisUtterance(frase);
@@ -217,9 +282,8 @@ function falarNomePaciente(paciente) {
   // Define o idioma para português do Brasil
   utterance.lang = 'pt-BR';
   
-  // Opcional: Ajustar velocidade (0.1 a 10, padrão é 1) e tom (0 a 2, padrão é 1)
-  utterance.rate = 0.9; // Um pouco mais lento para clareza na TV
-  utterance.pitch = 1;
+  // Velocidade de fala padrão (pode ajustar para 0.9 se achar muito rápido)
+  utterance.rate = 1; 
 
   // Tenta encontrar uma voz feminina em português, se disponível
   const voices = window.speechSynthesis.getVoices();
