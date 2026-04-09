@@ -2,50 +2,115 @@
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
-<title>Laser Beauty</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laser Beauty - Painel TV</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+* { box-sizing: border-box; }
+
 body {
   margin: 0;
-  background: #1c1c1c;
+  background: #121212;
   color: white;
-  font-family: Arial;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden; /* Evita barras de rolagem na TV */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
-  background: linear-gradient(90deg, purple, violet);
-  padding: 20px;
+  background: linear-gradient(90deg, #6a0dad, #a64dff);
+  padding: 30px;
   text-align: center;
-  font-size: 40px;
+  font-size: 50px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
 .container {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  padding: 20px;
+  grid-template-columns: 2.5fr 1fr;
+  gap: 30px;
+  padding: 40px;
+  flex: 1;
 }
 
 .card {
-  background: #2b2b2b;
-  padding: 20px;
-  border-radius: 20px;
+  background: #1e1e1e;
+  padding: 30px;
+  border-radius: 30px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
 }
 
-.chamado {
-  border: 3px solid violet;
-  padding: 30px;
+h2 {
+  color: #a64dff;
+  text-transform: uppercase;
+  font-size: 28px;
+  margin-top: 0;
+  border-bottom: 2px solid #333;
+  padding-bottom: 15px;
+}
+
+.chamado-principal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 5px solid #6a0dad;
+  border-radius: 25px;
+  background: #252525;
+  margin: 20px 0;
+  animation: pulso 2s infinite;
+}
+
+@keyframes pulso {
+  0% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0.4); }
+  70% { box-shadow: 0 0 0 30px rgba(166, 77, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0); }
+}
+
+.chamado-principal h1 {
+  font-size: 90px;
+  margin: 0;
+  color: #fff;
   text-align: center;
 }
 
-.chamado h1 {
-  font-size: 50px;
+.info-destaque {
+  font-size: 45px;
+  color: #a64dff;
+  font-weight: bold;
+  margin-top: 20px;
 }
 
-.lista div {
-  margin-top: 10px;
+.lista-espera {
+  margin-top: 20px;
+  font-size: 24px;
+}
+
+.lista-item {
+  padding: 15px;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  color: #bbb;
+}
+
+.ofertas p {
+  font-size: 32px;
+  margin: 20px 0;
+  padding: 15px;
+  background: #2a2a2a;
+  border-radius: 15px;
+  text-align: center;
+  border-left: 8px solid #6a0dad;
 }
 </style>
 </head>
@@ -56,53 +121,73 @@ header {
 
 <div class="container">
 
-<div class="card">
-<h2>Chamando agora</h2>
+  <div class="card">
+    <h2>Chamando agora</h2>
+    
+    <div class="chamado-principal">
+      <h1 id="nome">Aguardando...</h1>
+      <div id="info" class="info-destaque"></div>
+    </div>
 
-<div class="chamado">
-<h1 id="nome">---</h1>
-<div id="info"></div>
-</div>
+    <div style="margin-top: 20px;">
+      <h3 style="color: #666;">Últimos chamados:</h3>
+      <div id="lista" class="lista-espera"></div>
+    </div>
+  </div>
 
-<div class="lista" id="lista"></div>
-
-</div>
-
-<div class="card">
-<h2>Ofertas</h2>
-<p>Combo Básico - R$ 699</p>
-<p>Combo Premium - R$ 899</p>
-</div>
+  <div class="card ofertas">
+    <h2>Ofertas Especiais</h2>
+    <p>Combo Básico<br><strong style="color: #00ff88;">R$ 699</strong></p>
+    <p>Combo Premium<br><strong style="color: #00ff88;">R$ 899</strong></p>
+    <p>Limpeza Especial<br><strong style="color: #00ff88;">R$ 199</strong></p>
+  </div>
 
 </div>
 
 <script>
-const supabase = window.supabase.createClient(
+// Usando o supabase do objeto global (versão 2)
+const supabaseClient = supabase.createClient(
   "https://ezfxemgrwkrakxcwyrcl.supabase.co",
   "sb_publishable_ikTlRly6-KxFUk-7FB_6sQ_VAfUjge_"
 );
 
 async function carregar() {
-  const { data } = await supabase
-    .from("pacientes")
-    .select("*")
-    .order("created_at", { ascending: false });
+  try {
+    const { data, error } = await supabaseClient
+      .from("pacientes")
+      .select("*")
+      .order("created_at", { ascending: false })
+      .limit(5); // Pega os 5 últimos para não encher a tela
 
-  if (data.length > 0) {
-    document.getElementById("nome").innerText = data[0].nome;
-    document.getElementById("info").innerText =
-      `Consultório ${data[0].consultorio} - ${data[0].profissional}`;
+    if (error) throw error;
+
+    if (data && data.length > 0) {
+      // O primeiro da lista é o atual
+      document.getElementById("nome").innerText = data[0].nome;
+      document.getElementById("info").innerText = 
+        `CONSULTÓRIO ${data[0].consultorio} - ${data[0].profissional}`;
+
+      // Os outros aparecem na listinha de "últimos chamados"
+      let html = "";
+      data.slice(1).forEach(p => {
+        html += `
+          <div class="lista-item">
+            <span>${p.nome}</span>
+            <span>Sala ${p.consultorio}</span>
+          </div>`;
+      });
+      document.getElementById("lista").innerHTML = html;
+    }
+  } catch (err) {
+    console.error("Erro ao buscar dados:", err);
   }
-
-  let html = "";
-  data.slice(1).forEach(p => {
-    html += `<div>${p.nome} - ${p.consultorio}</div>`;
-  });
-
-  document.getElementById("lista").innerHTML = html;
 }
 
-setInterval(carregar, 2000);
+// Atualiza a cada 3 segundos
+setInterval(carregar, 3000);
+
+// Carrega ao abrir a página
+carregar();
 </script>
 
 </body>
