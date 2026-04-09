@@ -25,19 +25,18 @@ header {
   background: linear-gradient(90deg, #6a0dad, #a64dff);
   padding: 10px;
   text-align: center;
-  font-size: 55px;
+  font-size: 50px;
   font-weight: bold;
   color: white;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  z-index: 10;
 }
 
-/* NOVO POSICIONAMENTO DO LETREIRO */
+/* LETREIRO NO TOPO */
 .letreiro {
     background: #6a0dad;
     color: white;
-    padding: 10px 0;
-    font-size: 26px; /* Aumentado levemente para destaque no topo */
+    padding: 8px 0;
+    font-size: 24px;
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
@@ -47,7 +46,7 @@ header {
 .letreiro span {
     display: inline-block;
     padding-left: 100%;
-    animation: moverLetreiro 30s linear infinite; /* Velocidade levemente ajustada */
+    animation: moverLetreiro 30s linear infinite;
 }
 
 @keyframes moverLetreiro {
@@ -57,7 +56,8 @@ header {
 
 .container {
   display: grid;
-  grid-template-columns: 6.2fr 0.8fr; 
+  /* Proporção ajustada para 3:1 para caber bem em qualquer navegador */
+  grid-template-columns: 3fr 1fr; 
   gap: 15px;
   padding: 15px;
   flex: 1;
@@ -67,13 +67,13 @@ header {
 .card {
   background: white;
   padding: 20px;
-  border-radius: 35px;
+  border-radius: 30px;
   box-shadow: 0 5px 25px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
 }
 
-/* LADO ESQUERDO */
+/* LADO ESQUERDO - CHAMADA */
 .chamado-principal {
   flex: 1;
   display: flex;
@@ -89,12 +89,12 @@ header {
 
 @keyframes pulso {
   0% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0.4); }
-  70% { box-shadow: 0 0 0 35px rgba(166, 77, 255, 0); }
+  70% { box-shadow: 0 0 0 30px rgba(166, 77, 255, 0); }
   100% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0); }
 }
 
 #nome { 
-    font-size: 110px;
+    font-size: 100px;
     margin: 0; 
     text-align: center; 
     line-height: 1; 
@@ -103,7 +103,7 @@ header {
 }
 
 .info-destaque { 
-    font-size: 55px; 
+    font-size: 50px; 
     color: #6a0dad; 
     font-weight: bold; 
     margin-top: 15px; 
@@ -111,7 +111,7 @@ header {
 
 .titulo-ultimos {
     color: #6a0dad;
-    font-size: 28px;
+    font-size: 24px;
     margin-bottom: 10px;
     font-weight: bold;
     text-transform: uppercase;
@@ -119,29 +119,27 @@ header {
 }
 
 .lista-item {
-  padding: 10px 0;
+  padding: 8px 0;
   border-bottom: 2px solid #f3f0f7;
   display: flex;
   justify-content: space-between;
-  font-size: 38px;
+  font-size: 34px;
   color: #777;
   font-weight: 600;
 }
 
-/* LADO DIREITO - PROMOÇÕES */
+/* LADO DIREITO - COMBOS */
 .ofertas {
-  padding: 10px;
-  border-right: 15px solid #6a0dad;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  padding: 15px;
+  border-right: 12px solid #6a0dad;
+  background: #fff;
 }
 
 .ofertas h2 {
-    font-size: 35px;
+    font-size: 32px;
     margin-top: 0;
     color: #6a0dad;
-    border-bottom: 5px solid #6a0dad;
+    border-bottom: 4px solid #6a0dad;
     padding-bottom: 10px;
     text-align: center;
     text-transform: uppercase;
@@ -150,147 +148,15 @@ header {
 .combos-lista {
     display: flex;
     flex-direction: column;
-    gap: 40px;
-    margin-top: 20px;
+    gap: 25px;
+    margin-top: 15px;
 }
 
 .promo-item {
   text-align: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 20px;
+  border-bottom: 1px solid #f3f0f7;
+  padding-bottom: 15px;
 }
 
 .promo-item strong {
-  font-size: 30px;
-  color: #6a0dad;
-  display: block;
-  text-transform: uppercase;
-  line-height: 1;
-}
-
-.promo-item small {
-  font-size: 42px; 
-  color: #000;
-  display: block;
-  margin: 15px 0;
-  line-height: 1.1;
-  font-weight: 800;
-  word-wrap: break-word;
-}
-
-.preco-destaque {
-  font-size: 45px;
-  color: #27ae60;
-  font-weight: 900;
-  display: block;
-}
-</style>
-</head>
-
-<body>
-
-<header>LASER BEAUTY</header>
-
-<div class="letreiro">
-    <span>Participe do sorteio da cesta de chocolates e um botox! Indique amigos e ganhe cupons para concorrer.</span>
-</div>
-
-<div class="container">
-
-  <div class="card">
-    <h2 style="color: #6a0dad; font-size: 32px; margin: 0 0 5px 0;">Chamando agora:</h2>
-    <div class="chamado-principal">
-      <h1 id="nome">...</h1>
-      <div id="info" class="info-destaque"></div>
-    </div>
-    <div>
-      <div class="titulo-ultimos">Últimos chamados:</div>
-      <div id="lista"></div>
-    </div>
-  </div>
-
-  <div class="card ofertas">
-    <h2>Combos</h2>
-    
-    <div class="combos-lista">
-        <div class="promo-item">
-            <strong>TUDÃO</strong>
-            <small>AXILA BUÇO VIRILHA PERIANAL PERNAS</small>
-            <span class="preco-destaque">10x 89,99</span>
-        </div>
-
-        <div class="promo-item">
-            <strong>BÁSICO</strong>
-            <small>AXILA VIRILHA PERIANAL</small>
-            <span class="preco-destaque">10x 69,99</span>
-        </div>
-
-        <div class="promo-item">
-            <strong>PREMIUM</strong>
-            <small>CORPO INTEIRO</small>
-            <span class="preco-destaque">10x 189,99</span>
-        </div>
-    </div>
-  </div>
-
-</div>
-
-<script>
-const supabaseClient = supabase.createClient(
-  "https://ezfxemgrwkrakxcwyrcl.supabase.co",
-  "sb_publishable_ikTlRly6-KxFUk-7FB_6sQ_VAfUjge_"
-);
-
-let ultimoIdChamado = null;
-
-async function carregar() {
-  try {
-    const { data, error } = await supabaseClient
-      .from("pacientes")
-      .select("*")
-      .order("id", { ascending: false })
-      .limit(6); 
-
-    if (error) throw error;
-
-    if (data && data.length > 0) {
-      const atual = data[0];
-      document.getElementById("nome").innerText = atual.nome;
-      document.getElementById("info").innerText = `SALA ${atual.consultorio} - ${atual.profissional}`;
-
-      let html = "";
-      const anteriores = data.slice(1); 
-      anteriores.forEach(p => {
-        html += `<div class="lista-item"><span>${p.nome}</span><span>SALA ${p.consultorio}</span></div>`;
-      });
-      document.getElementById("lista").innerHTML = html;
-
-      if (atual.id !== ultimoIdChamado) {
-        falarHumano(atual);
-        ultimoIdChamado = atual.id;
-      }
-    }
-  } catch (err) { console.error(err); }
-}
-
-function falarHumano(p) {
-  window.speechSynthesis.cancel();
-  const texto = `${p.nome}. Consultório ${p.consultorio}. Profissional ${p.profissional}.`;
-  const msg = new SpeechSynthesisUtterance(texto);
-  msg.lang = 'pt-BR';
-  msg.rate = 1.3; 
-  
-  const vozes = window.speechSynthesis.getVoices();
-  const vozHumana = vozes.find(v => v.lang === 'pt-BR' && (v.name.includes('Google') || v.name.includes('Natural')));
-  if (vozHumana) msg.voice = vozHumana;
-
-  window.speechSynthesis.speak(msg);
-}
-
-window.speechSynthesis.onvoiceschanged = carregar;
-setInterval(carregar, 3000);
-carregar();
-</script>
-
-</body>
-</html>
+  font-size: 26px;
