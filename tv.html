@@ -33,8 +33,8 @@ header {
 
 .container {
   display: grid;
-  /* Ajustado: Aumentei o espaço da esquerda e diminuí o da direita (promoções) */
-  grid-template-columns: 4.5fr 1fr; 
+  /* Proporção ajustada para deixar o quadro lateral mais estreito */
+  grid-template-columns: 5fr 1fr; 
   gap: 15px;
   padding: 15px;
   flex: 1;
@@ -109,61 +109,66 @@ header {
     font-weight: bold;
 }
 
-/* LADO DIREITO - PROMOÇÕES */
+/* LADO DIREITO - PROMOÇÕES EM COLUNA */
 .ofertas {
-  text-align: right; 
   padding: 15px;
-  justify-content: flex-start;
   border-right: 15px solid #6a0dad;
-  /* O quadro ficou mais estreito conforme solicitado */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .ofertas h2 {
-    font-size: 26px;
+    font-size: 30px;
     margin-top: 0;
     color: #6a0dad;
-    border-bottom: 2px solid #eee;
-    padding-bottom: 5px;
+    border-bottom: 3px solid #6a0dad;
+    padding-bottom: 10px;
     text-align: center;
+    text-transform: uppercase;
+}
+
+.combos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espaço entre os itens da coluna */
+    margin-top: 20px;
 }
 
 .promo-item {
-  margin-bottom: 25px;
-  text-align: left;
+  text-align: center;
 }
 
 .promo-item strong {
-  font-size: 24px;
+  font-size: 26px;
   color: #6a0dad;
   display: block;
   text-transform: uppercase;
-  text-align: center;
+  margin-bottom: 5px;
 }
 
-/* Aumentado o tamanho da descrição das promoções */
+/* Letra das descrições aumentada para 30px */
 .promo-item small {
-  font-size: 22px; 
-  color: #444;
+  font-size: 30px; 
+  color: #333;
   display: block;
-  margin: 10px 0;
-  line-height: 1.3;
-  text-align: center;
+  margin: 12px 0;
+  line-height: 1.2;
+  font-weight: 500;
 }
 
 .preco-real {
     color: #999;
-    font-size: 16px;
+    font-size: 18px;
     text-decoration: line-through;
     display: block;
-    text-align: center;
 }
 
 .preco-destaque {
-  font-size: 34px;
+  font-size: 36px;
   color: #27ae60;
   font-weight: bold;
   display: block;
-  text-align: center;
 }
 
 /* LETREIRO */
@@ -171,7 +176,7 @@ header {
     background: #6a0dad;
     color: white;
     padding: 12px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     overflow: hidden;
     white-space: nowrap;
@@ -211,9 +216,9 @@ header {
   </div>
 
   <div class="card ofertas">
-    <div>
-        <h2>Combos</h2>
-        
+    <h2>Combos</h2>
+    
+    <div class="combos-lista">
         <div class="promo-item">
             <strong>TUDÃO</strong>
             <small>10ss Axila + Buço + Virilha + Perianal + Pernas inteiras</small>
@@ -253,7 +258,6 @@ let ultimoIdChamado = null;
 
 async function carregar() {
   try {
-    // CORREÇÃO: Ordenando por ID descendente garante que o MAIS NOVO seja sempre o primeiro (data[0])
     const { data, error } = await supabaseClient
       .from("pacientes")
       .select("*")
@@ -263,29 +267,23 @@ async function carregar() {
     if (error) throw error;
 
     if (data && data.length > 0) {
-      // PACIENTE ATUAL (Sempre o primeiro da lista retornada)
       const atual = data[0];
-      
-      // Atualiza o DOM principal
       document.getElementById("nome").innerText = atual.nome;
       document.getElementById("info").innerText = `SALA ${atual.consultorio} - ${atual.profissional}`;
 
-      // FILA DE ÚLTIMOS (Pula o atual e mostra os anteriores)
       let html = "";
       const anteriores = data.slice(1); 
-      
       anteriores.forEach(p => {
         html += `<div class="lista-item"><span>${p.nome}</span><span>SALA ${p.consultorio}</span></div>`;
       });
       document.getElementById("lista").innerHTML = html;
 
-      // VOZ (Verifica se o ID mudou para não repetir a fala do mesmo paciente)
       if (atual.id !== ultimoIdChamado) {
         falarHumano(atual);
         ultimoIdChamado = atual.id;
       }
     }
-  } catch (err) { console.error("Erro ao carregar dados:", err); }
+  } catch (err) { console.error(err); }
 }
 
 function falarHumano(p) {
@@ -293,10 +291,8 @@ function falarHumano(p) {
   const texto = `${p.nome}. Consultório ${p.consultorio}. Profissional ${p.profissional}.`;
   const msg = new SpeechSynthesisUtterance(texto);
   msg.lang = 'pt-BR';
-  // Aumentei a velocidade para 1.3 conforme seu pedido de agilidade
-  msg.rate = 1.3; 
-  msg.pitch = 1.0;
-
+  msg.rate = 1.3; // Velocidade aumentada para agilizar a chamada
+  
   const vozes = window.speechSynthesis.getVoices();
   const vozHumana = vozes.find(v => v.lang === 'pt-BR' && (v.name.includes('Google') || v.name.includes('Natural')));
   if (vozHumana) msg.voice = vozHumana;
@@ -304,7 +300,6 @@ function falarHumano(p) {
   window.speechSynthesis.speak(msg);
 }
 
-// Garante que as vozes carreguem antes de iniciar
 window.speechSynthesis.onvoiceschanged = carregar;
 setInterval(carregar, 3000);
 carregar();
