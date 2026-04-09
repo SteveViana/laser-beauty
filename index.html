@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Laser Beauty</title>
+</head>
+<body style="font-family: Arial;">
+
+<div style="background: purple; color: white; padding: 15px; text-align: center;">
+  Laser Beauty - Chamada de Pacientes
+</div>
+
+<div style="padding: 20px;">
+  <input id="nome" placeholder="Nome"><br><br>
+  <input id="consultorio" placeholder="Consultório"><br><br>
+  <button onclick="add()">Chamar</button>
+
+  <h3>Painel</h3>
+  <div id="lista"></div>
+</div>
+
+<script>
+let pacientes = JSON.parse(localStorage.getItem("p")) || [];
+
+function salvar() {
+  localStorage.setItem("p", JSON.stringify(pacientes));
+  render();
+}
+
+function add() {
+  let nome = document.getElementById("nome").value;
+  let c = document.getElementById("consultorio").value;
+
+  pacientes.unshift({nome, c});
+  salvar();
+
+  let msg = new SpeechSynthesisUtterance(
+    `Paciente ${nome}, dirigir-se ao consultório ${c}`
+  );
+  speechSynthesis.speak(msg);
+}
+
+function remove(i){
+  pacientes.splice(i,1);
+  salvar();
+}
+
+function render(){
+  let html = "";
+  pacientes.forEach((p,i)=>{
+    html += `<div>
+      ${p.nome} - ${p.c}
+      <button onclick="remove(${i})">X</button>
+    </div>`;
+  });
+  document.getElementById("lista").innerHTML = html;
+}
+
+render();
+</script>
+
+</body>
+</html>
