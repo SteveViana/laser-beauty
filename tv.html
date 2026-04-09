@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laser Beauty - Painel TV Otimizado</title>
+<title>Laser Beauty - Painel TV Correção Fila</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -33,7 +33,6 @@ header {
 
 .container {
   display: grid;
-  /* Quadro de promoções ainda mais estreito horizontalmente */
   grid-template-columns: 3.5fr 1fr;
   gap: 15px;
   padding: 15px;
@@ -109,7 +108,7 @@ header {
     font-weight: bold;
 }
 
-/* LADO DIREITO - PROMOÇÕES MAIS ESTREITAS */
+/* LADO DIREITO - PROMOÇÕES */
 .ofertas {
   text-align: right; 
   padding: 15px;
@@ -140,7 +139,7 @@ header {
 }
 
 .promo-item small {
-  font-size: 19px; /* Descrição aumentada conforme solicitado */
+  font-size: 19px; 
   color: #444;
   display: block;
   margin: 8px 0;
@@ -254,22 +253,26 @@ async function carregar() {
       .from("pacientes")
       .select("*")
       .order("created_at", { ascending: false })
-      .limit(4); 
+      .limit(5); // Aumentei o limite para garantir registros na fila de baixo
 
     if (error) throw error;
 
     if (data && data.length > 0) {
+      // PACIENTE ATUAL (O mais recente no banco de dados)
       const atual = data[0];
       document.getElementById("nome").innerText = atual.nome;
       document.getElementById("info").innerText = `SALA ${atual.consultorio} - ${atual.profissional}`;
 
+      // FILA DE ÚLTIMOS (Pula o primeiro registro para não repetir o nome)
       let html = "";
       const filaSecundaria = data.slice(1); 
+      
       filaSecundaria.forEach(p => {
         html += `<div class="lista-item"><span>${p.nome}</span><span>SALA ${p.consultorio}</span></div>`;
       });
       document.getElementById("lista").innerHTML = html;
 
+      // VOZ (Velocidade 1.1 conforme solicitado)
       if (atual.id !== ultimoIdChamado) {
         falarHumano(atual);
         ultimoIdChamado = atual.id;
@@ -283,8 +286,6 @@ function falarHumano(p) {
   const texto = `${p.nome}. Consultório ${p.consultorio}. Profissional ${p.profissional}.`;
   const msg = new SpeechSynthesisUtterance(texto);
   msg.lang = 'pt-BR';
-  
-  // VELOCIDADE AUMENTADA: de 0.8 para 1.1
   msg.rate = 1.1; 
   msg.pitch = 1.0;
 
