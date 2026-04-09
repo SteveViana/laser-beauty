@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laser Beauty - Painel TV (Voz Curta)</title>
+<title>Laser Beauty - Painel TV Final</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -12,151 +12,151 @@
 
 body {
   margin: 0;
-  background: #f3f0f7; /* Fundo claro do painel admin */
+  background: #f3f0f7;
   color: #333;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  overflow: hidden; /* Evita barras de rolagem na TV */
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  overflow: hidden;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 header {
-  background: linear-gradient(90deg, #6a0dad, #a64dff); /* Mesma cor do painel admin */
-  padding: 25px;
+  background: linear-gradient(90deg, #6a0dad, #a64dff);
+  padding: 15px;
   text-align: center;
-  font-size: 50px;
+  font-size: 55px;
   font-weight: bold;
-  letter-spacing: 2px;
   color: white;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .container {
   display: grid;
-  grid-template-columns: 2.2fr 1fr;
-  gap: 25px;
-  padding: 30px;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  padding: 20px;
   flex: 1;
 }
 
 .card {
-  background: white; /* Mesma cor dos cards do painel admin */
+  background: white;
   padding: 25px;
-  border-radius: 25px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+  border-radius: 35px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.05);
   display: flex;
   flex-direction: column;
 }
 
-h2 {
-  color: #6a0dad; /* Roxo principal do painel admin */
-  text-transform: uppercase;
-  font-size: 26px;
-  margin-top: 0;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 12px;
+/* OFERTAS NO CANTO DIREITO */
+.ofertas {
+  text-align: right; 
+  padding-right: 30px;
 }
 
+.ofertas h2 {
+    font-size: 40px;
+    margin-bottom: 30px;
+    color: #6a0dad;
+}
+
+.promo-item {
+  margin-bottom: 45px;
+  border-right: 15px solid #6a0dad; 
+  padding-right: 25px;
+}
+
+.promo-item strong {
+  font-size: 38px;
+  color: #6a0dad;
+  display: block;
+  text-transform: uppercase;
+}
+
+.promo-item small {
+  font-size: 24px;
+  color: #666;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.preco-destaque {
+  font-size: 52px;
+  color: #27ae60;
+  font-weight: bold;
+  display: block;
+}
+
+/* PAINEL DE CHAMADA PRINCIPAL */
 .chamado-principal {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 5px solid #a64dff; /* Roxo mais claro para destaque */
-  border-radius: 20px;
-  background: white;
+  border: 10px solid #a64dff;
+  border-radius: 40px;
   margin: 15px 0;
+  background: #fff;
   animation: pulso 2s infinite;
 }
 
 @keyframes pulso {
-  0% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0.2); }
-  70% { box-shadow: 0 0 0 25px rgba(166, 77, 255, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0.4); }
+  70% { box-shadow: 0 0 0 30px rgba(166, 77, 255, 0); }
   100% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0); }
 }
 
-.chamado-principal h1 {
-  font-size: 85px;
-  margin: 0;
-  color: #333;
-  text-align: center;
-}
+#nome { font-size: 95px; margin: 0; text-align: center; line-height: 1.1; font-weight: 800; }
+.info-destaque { font-size: 50px; color: #6a0dad; font-weight: bold; margin-top: 15px; }
 
-.info-destaque {
-  font-size: 40px;
-  color: #6a0dad;
-  font-weight: bold;
-  margin-top: 15px;
-}
-
-.lista-espera {
-  margin-top: 15px;
-  font-size: 22px;
+/* LISTA DE ÚLTIMOS CHAMADOS */
+.titulo-ultimos {
+    color: #6a0dad; /* Texto Roxo solicitado */
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .lista-item {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
+  padding: 15px;
+  border-bottom: 2px solid #f3f0f7;
   display: flex;
   justify-content: space-between;
-  color: #666;
+  font-size: 38px; /* Nome dos últimos bem maior */
+  color: #777;
+  font-weight: 600;
 }
 
-/* --- ESTILOS DAS OFERTAS --- */
-.ofertas p {
-  font-size: 18px;
-  margin: 15px 0;
-  padding: 12px;
-  background: #f8f5fb;
-  border-radius: 12px;
-  text-align: left;
-  border-left: 6px solid #6a0dad;
-  color: #333;
-}
-
-.ofertas p strong {
-    font-size: 20px;
-    color: #6a0dad;
-}
-
-.preco-real {
-    color: #666;
-    font-size: 16px;
-    text-decoration: line-through;
-}
-
-.preco-destaque {
-    font-size: 24px;
-    color: #00ff88; /* Verde para o preço em parcelas */
+.lista-item span:last-child {
+    color: #6a0dad; /* Sala em roxo na lista também */
     font-weight: bold;
 }
 
-/* --- ESTILOS DO LETREIRO --- */
+/* LETREIRO */
 .letreiro {
-    background: #6a0dad; /* Fundo roxo */
+    background: #6a0dad;
     color: white;
-    padding: 10px;
-    font-size: 18px;
+    padding: 20px;
+    font-size: 26px;
     font-weight: bold;
-    white-space: nowrap; /* Impede que o texto quebre */
-    overflow: hidden; /* Esconde o texto que sai da tela */
-    position: relative;
-    border-radius: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    border-radius: 20px;
+    margin-top: auto;
 }
 
 .letreiro span {
     display: inline-block;
-    padding-left: 100%; /* Começa fora da tela à direita */
-    animation: moverLetreiro 20s linear infinite; /* Animação contínua */
+    padding-left: 100%;
+    animation: moverLetreiro 28s linear infinite;
 }
 
 @keyframes moverLetreiro {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); } /* Move tudo para a esquerda */
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
 }
-
 </style>
 </head>
 
@@ -167,42 +167,38 @@ h2 {
 <div class="container">
 
   <div class="card">
-    <h2>Chamando agora</h2>
-    
+    <h2 style="color: #6a0dad; font-size: 32px; margin: 0;">Chamando agora</h2>
     <div class="chamado-principal">
-      <h1 id="nome">Aguardando...</h1>
+      <h1 id="nome">...</h1>
       <div id="info" class="info-destaque"></div>
     </div>
-
-    <div style="margin-top: 15px;">
-      <h3 style="color: #bbb; margin-bottom: 5px;">Últimos chamados:</h3>
-      <div id="lista" class="lista-espera"></div>
+    
+    <div>
+      <div class="titulo-ultimos">Últimos chamados:</div>
+      <div id="lista"></div>
     </div>
   </div>
 
   <div class="card ofertas">
     <h2>Combos de Depilação</h2>
     
-    <p>
-        <strong>Combo TUDÃO</strong><br>
-        <small>Axila, Buço, Virilha, Perianal, Pernas inteiras</small><br>
-        <span class="preco-real">De R$ 2.500,00</span><br>
+    <div class="promo-item">
+        <strong>Combo TUDÃO</strong>
+        <small>Axila + Buço + Virilha + Perianal + Pernas</small>
         <span class="preco-destaque">10x R$ 89,99</span>
-    </p>
+    </div>
 
-    <p>
-        <strong>Combo BÁSICO</strong><br>
-        <small>Axila, Virilha, Perianal</small><br>
-        <span class="preco-real">De R$ 1.300,00</span><br>
+    <div class="promo-item">
+        <strong>Combo BÁSICO</strong>
+        <small>Axila + Virilha + Perianal</small>
         <span class="preco-destaque">10x R$ 69,99</span>
-    </p>
+    </div>
 
-    <p>
-        <strong>Combo PREMIUM</strong><br>
-        <small>Axila, Virilha, Perianal, Pernas inteiras, Face, Glúteo, Dedos, Linha Alba, Braços, Abdomen</small><br>
-        <span class="preco-real">De R$ 4.000,00</span><br>
+    <div class="promo-item">
+        <strong>Combo PREMIUM</strong>
+        <small>Corpo Completo + Face</small>
         <span class="preco-destaque">10x R$ 189,99</span>
-    </p>
+    </div>
 
     <div class="letreiro">
         <span>Não deixe de participar do sorteio da cesta de chocolates e um botox. Para cada pessoa indicada você ganha 1 papel do sorteio.</span>
@@ -212,13 +208,11 @@ h2 {
 </div>
 
 <script>
-// Usando o supabase do objeto global (versão 2)
 const supabaseClient = supabase.createClient(
   "https://ezfxemgrwkrakxcwyrcl.supabase.co",
   "sb_publishable_ikTlRly6-KxFUk-7FB_6sQ_VAfUjge_"
 );
 
-// Variável para armazenar o ID do último paciente chamado e evitar repetições da voz
 let ultimoIdChamado = null;
 
 async function carregar() {
@@ -227,87 +221,28 @@ async function carregar() {
       .from("pacientes")
       .select("*")
       .order("created_at", { ascending: false })
-      .limit(6); // Pega os 6 últimos para ter o atual + 5 na fila
+      .limit(5);
 
     if (error) throw error;
 
     if (data && data.length > 0) {
-      const pacienteAtual = data[0];
+      const atual = data[0];
       
-      // Atualiza o destaque ("Chamando agora")
-      document.getElementById("nome").innerText = pacienteAtual.nome;
-      document.getElementById("info").innerText = 
-        `CONSULTÓRIO ${pacienteAtual.consultorio} - ${pacienteAtual.profissional}`;
-
-      // LÓGICA DA FILA CORRIGIDA:
-      // Pega os pacientes restantes (penúltimo, antepenúltimo, etc.)
-      const ultimosChamados = data.slice(1);
-      // REVERTE a ordem para que o penúltimo chamado fique no topo da lista secundária
-      ultimosChamados.reverse();
+      document.getElementById("nome").innerText = atual.nome;
+      document.getElementById("info").innerText = `SALA ${atual.consultorio} - ${atual.profissional}`;
 
       let html = "";
-      ultimosChamados.forEach(p => {
+      const filaSecundaria = data.slice(1); 
+      
+      filaSecundaria.forEach(p => {
         html += `
           <div class="lista-item">
             <span>${p.nome}</span>
-            <span>Sala ${p.consultorio}</span>
+            <span>SALA ${p.consultorio}</span>
           </div>`;
       });
       document.getElementById("lista").innerHTML = html;
 
-      // LÓGICA DA VOZ (SIMPLIFICADA E DIRETA):
-      // Verifica se o paciente atual é diferente do último que "falamos"
-      if (pacienteAtual.id !== ultimoIdChamado) {
-        // Se for um novo paciente, fala o nome dele
-        falarNomePacienteDireto(pacienteAtual);
-        // Atualiza o ID armazenado
-        ultimoIdChamado = pacienteAtual.id;
-      }
-    }
-  } catch (err) {
-    console.error("Erro ao buscar dados:", err);
-  }
-}
-
-function falarNomePacienteDireto(paciente) {
-  // Cancela qualquer fala que esteja em andamento para não encavalar
-  window.speechSynthesis.cancel();
-
-  // Cria a frase que será dita (Simplificada e Direta)
-  const frase = `${paciente.nome}, consultório ${paciente.consultorio}, profissional ${paciente.profissional}`;
-  
-  // Cria o objeto de fala
-  const utterance = new SpeechSynthesisUtterance(frase);
-  
-  // Define o idioma para português do Brasil
-  utterance.lang = 'pt-BR';
-  
-  // Velocidade de fala padrão (pode ajustar para 0.9 se achar muito rápido)
-  utterance.rate = 1; 
-
-  // Tenta encontrar uma voz feminina em português, se disponível
-  const voices = window.speechSynthesis.getVoices();
-  const femaleVoice = voices.find(voice => voice.lang === 'pt-BR' && voice.name.includes('Feminina'));
-  if (femaleVoice) {
-    utterance.voice = femaleVoice;
-  }
-
-  // Executa a fala
-  window.speechSynthesis.speak(utterance);
-}
-
-// Garante que as vozes sejam carregadas antes de tentar usá-las
-window.speechSynthesis.onvoiceschanged = () => {
-  // Opcional: pode logar as vozes disponíveis para debugar
-  // console.log(window.speechSynthesis.getVoices());
-};
-
-// Atualiza a cada 3 segundos
-setInterval(carregar, 3000);
-
-// Carrega ao abrir a página
-carregar();
-</script>
-
-</body>
-</html>
+      if (atual.id !== ultimoIdChamado) {
+        falarHumano(atual);
+        ultimoIdChamado = atual.id;
