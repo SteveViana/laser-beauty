@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Laser Beauty</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+<style>
+body {
+  margin: 0;
+  background: #1c1c1c;
+  color: white;
+  font-family: Arial;
+}
+
+header {
+  background: linear-gradient(90deg, purple, violet);
+  padding: 20px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: #2b2b2b;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.chamado {
+  border: 3px solid violet;
+  padding: 30px;
+  text-align: center;
+}
+
+.chamado h1 {
+  font-size: 50px;
+}
+
+.lista div {
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>LASER BEAUTY</header>
+
+<div class="container">
+
+<div class="card">
+<h2>Chamando agora</h2>
+
+<div class="chamado">
+<h1 id="nome">---</h1>
+<div id="info"></div>
+</div>
+
+<div class="lista" id="lista"></div>
+
+</div>
+
+<div class="card">
+<h2>Ofertas</h2>
+<p>Combo Básico - R$ 699</p>
+<p>Combo Premium - R$ 899</p>
+</div>
+
+</div>
+
+<script>
+const supabase = window.supabase.createClient(
+  "https://ezfxemgrwkrakxcwyrcl.supabase.co",
+  "sb_publishable_ikTlRly6-KxFUk-7FB_6sQ_VAfUjge_"
+);
+
+async function carregar() {
+  const { data } = await supabase
+    .from("pacientes")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (data.length > 0) {
+    document.getElementById("nome").innerText = data[0].nome;
+    document.getElementById("info").innerText =
+      `Consultório ${data[0].consultorio} - ${data[0].profissional}`;
+  }
+
+  let html = "";
+  data.slice(1).forEach(p => {
+    html += `<div>${p.nome} - ${p.consultorio}</div>`;
+  });
+
+  document.getElementById("lista").innerHTML = html;
+}
+
+setInterval(carregar, 2000);
+</script>
+
+</body>
+</html>
