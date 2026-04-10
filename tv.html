@@ -5,288 +5,112 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Laser Beauty - Painel TV</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.7/dist/umd/supabase.js"></script>
 
 <style>
 * { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  background: #f3f0f7;
-  color: #333;
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  overflow: hidden;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-header {
-  background: linear-gradient(90deg, #6a0dad, #a64dff);
-  padding: 10px;
-  text-align: center;
-  font-size: 50px;
-  font-weight: bold;
-  color: white;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-/* LETREIRO NO TOPO */
-.letreiro {
-    background: #6a0dad;
-    color: white;
-    padding: 8px 0;
-    font-size: 24px;
-    font-weight: bold;
-    overflow: hidden;
-    white-space: nowrap;
-    border-bottom: 4px solid #a64dff;
-}
-
-.letreiro span {
-    display: inline-block;
-    padding-left: 100%;
-    animation: moverLetreiro 30s linear infinite;
-}
-
-@keyframes moverLetreiro {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
-
-.container {
-  display: grid;
-  /* Proporção ajustada para 3:1 para caber bem em qualquer navegador */
-  grid-template-columns: 3fr 1fr; 
-  gap: 15px;
-  padding: 15px;
-  flex: 1;
-  overflow: hidden;
-}
-
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 30px;
-  box-shadow: 0 5px 25px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-}
-
-/* LADO ESQUERDO - CHAMADA */
-.chamado-principal {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 10px solid #a64dff;
-  border-radius: 40px;
-  margin: 10px 0 20px 0;
-  background: #fff;
-  animation: pulso 2s infinite;
-}
-
-@keyframes pulso {
-  0% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0.4); }
-  70% { box-shadow: 0 0 0 30px rgba(166, 77, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(166, 77, 255, 0); }
-}
-
-#nome { 
-    font-size: 100px;
-    margin: 0; 
-    text-align: center; 
-    line-height: 1; 
-    font-weight: 900;
-    text-transform: uppercase;
-}
-
-.info-destaque { 
-    font-size: 50px; 
-    color: #6a0dad; 
-    font-weight: bold; 
-    margin-top: 15px; 
-}
-
-.titulo-ultimos {
-    color: #6a0dad;
-    font-size: 24px;
-    margin-bottom: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    border-bottom: 3px solid #f3f0f7;
-}
-
-.lista-item {
-  padding: 8px 0;
-  border-bottom: 2px solid #f3f0f7;
-  display: flex;
-  justify-content: space-between;
-  font-size: 34px;
-  color: #777;
-  font-weight: 600;
-}
-
-/* LADO DIREITO - COMBOS */
-.ofertas {
-  padding: 15px;
-  border-right: 12px solid #6a0dad;
-  background: #fff;
-}
-
-.ofertas h2 {
-    font-size: 32px;
-    margin-top: 0;
-    color: #6a0dad;
-    border-bottom: 4px solid #6a0dad;
-    padding-bottom: 10px;
-    text-align: center;
-    text-transform: uppercase;
-}
-
-.combos-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    margin-top: 15px;
-}
-
-.promo-item {
-  text-align: center;
-  border-bottom: 1px solid #f3f0f7;
-  padding-bottom: 15px;
-}
-
-.promo-item strong {
-  font-size: 26px;
-  color: #6a0dad;
-  display: block;
-  text-transform: uppercase;
-}
-
-/* Descrição grande e em negrito */
-.promo-item small {
-  font-size: 32px; 
-  color: #000;
-  display: block;
-  margin: 10px 0;
-  line-height: 1.1;
-  font-weight: 800;
-}
-
-.preco-destaque {
-  font-size: 40px;
-  color: #27ae60;
-  font-weight: 900;
-  display: block;
-}
+body { margin: 0; background: #f3f0f7; color: #333; font-family: Arial, sans-serif; overflow: hidden; height: 100vh; display: flex; flex-direction: column; }
+header { background: linear-gradient(90deg, #6a0dad, #a64dff); padding: 10px; text-align: center; font-size: 50px; font-weight: bold; color: white; }
+.letreiro { background: #6a0dad; color: white; padding: 8px 0; font-size: 24px; font-weight: bold; overflow: hidden; white-space: nowrap; border-bottom: 4px solid #a64dff; }
+.letreiro span { display: inline-block; padding-left: 100%; animation: moverLetreiro 30s linear infinite; }
+@keyframes moverLetreiro { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+.container { display: grid; grid-template-columns: 3fr 1fr; gap: 15px; padding: 15px; flex: 1; overflow: hidden; }
+.card { background: white; padding: 20px; border-radius: 30px; box-shadow: 0 5px 25px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+.chamado-principal { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; border: 10px solid #a64dff; border-radius: 40px; margin: 10px 0 20px 0; background: #fff; }
+#nome { font-size: 90px; margin: 0; text-align: center; line-height: 1; font-weight: bold; text-transform: uppercase; }
+.info-destaque { font-size: 45px; color: #6a0dad; font-weight: bold; margin-top: 15px; }
+.titulo-ultimos { color: #6a0dad; font-size: 24px; margin-bottom: 10px; font-weight: bold; border-bottom: 3px solid #f3f0f7; }
+.lista-item { padding: 8px 0; border-bottom: 2px solid #f3f0f7; display: flex; justify-content: space-between; font-size: 32px; color: #777; }
+.ofertas { padding: 15px; border-right: 12px solid #6a0dad; }
+.ofertas h2 { font-size: 32px; color: #6a0dad; border-bottom: 4px solid #6a0dad; text-align: center; margin: 0; }
+.promo-item { text-align: center; border-bottom: 1px solid #f3f0f7; padding: 15px 0; }
+.promo-item strong { font-size: 24px; color: #6a0dad; display: block; }
+.promo-item small { font-size: 28px; color: #000; display: block; font-weight: bold; margin: 5px 0; }
+.preco-destaque { font-size: 36px; color: #27ae60; font-weight: bold; display: block; }
 </style>
 </head>
 
 <body>
-
 <header>LASER BEAUTY</header>
-
-<div class="letreiro">
-    <span>Participe do sorteio da cesta de chocolates e um botox! Indique amigos e ganhe cupons para concorrer.</span>
-</div>
-
+<div class="letreiro"><span>Participe do sorteio da cesta de chocolates e um botox! Indique amigos e ganhe cupons para concorrer.</span></div>
 <div class="container">
-
   <div class="card">
-    <h2 style="color: #6a0dad; font-size: 28px; margin: 0 0 5px 0;">Chamando agora:</h2>
+    <h2 style="color: #6a0dad; font-size: 28px; margin: 0;">Chamando agora:</h2>
     <div class="chamado-principal">
-      <h1 id="nome">...</h1>
-      <div id="info" class="info-destaque"></div>
+      <h1 id="nome">Carregando...</h1>
+      <div id="info" class="info-destaque">Aguarde</div>
     </div>
-    <div>
-      <div class="titulo-ultimos">Últimos chamados:</div>
-      <div id="lista"></div>
-    </div>
+    <div class="titulo-ultimos">Últimos chamados:</div>
+    <div id="lista"></div>
   </div>
-
   <div class="card ofertas">
     <h2>Combos</h2>
-    <div class="combos-lista">
-        <div class="promo-item">
-            <strong>TUDÃO</strong>
-            <small>AXILA + BUÇO + VIRILHA + PERIANAL + PERNAS</small>
-            <span class="preco-destaque">10x 89,99</span>
-        </div>
-
-        <div class="promo-item">
-            <strong>BÁSICO</strong>
-            <small>AXILA + VIRILHA + PERIANAL</small>
-            <span class="preco-destaque">10x 69,99</span>
-        </div>
-
-        <div class="promo-item">
-            <strong>PREMIUM</strong>
-            <small>CORPO INTEIRO</small>
-            <span class="preco-destaque">10x 189,99</span>
-        </div>
-    </div>
+    <div class="promo-item"><strong>TUDÃO</strong><small>AXILA + BUÇO + VIRILHA + PERIANAL + PERNAS</small><span class="preco-destaque">10x 89,99</span></div>
+    <div class="promo-item"><strong>BÁSICO</strong><small>AXILA + VIRILHA + PERIANAL</small><span class="preco-destaque">10x 69,99</span></div>
+    <div class="promo-item"><strong>PREMIUM</strong><small>CORPO INTEIRO</small><span class="preco-destaque">10x 189,99</span></div>
   </div>
-
 </div>
 
 <script>
-const supabaseClient = supabase.createClient(
-  "https://ezfxemgrwkrakxcwyrcl.supabase.co",
-  "sb_publishable_ikTlRly6-KxFUk-7FB_6sQ_VAfUjge_"
-);
+// Configuração sem usar "const" ou "let" em excesso para evitar bugs em TVs velhas
+var _url = "https://ezfxemgrwkrakxcwyrcl.supabase.co";
+var _key = "sb_publishable_ikTlRly6-KxFUk-7FB_6sQ_VAfUjge_";
+var supabaseClient = supabase.createClient(_url, _key);
+var ultimoId = null;
 
-let ultimoIdChamado = null;
-
-async function carregar() {
-  try {
-    const { data, error } = await supabaseClient
-      .from("pacientes")
-      .select("*")
-      .order("id", { ascending: false })
-      .limit(6); 
-
-    if (error) throw error;
-
-    if (data && data.length > 0) {
-      const atual = data[0];
-      document.getElementById("nome").innerText = atual.nome;
-      document.getElementById("info").innerText = `SALA ${atual.consultorio} - ${atual.profissional}`;
-
-      let html = "";
-      const anteriores = data.slice(1); 
-      anteriores.forEach(p => {
-        html += `<div class="lista-item"><span>${p.nome}</span><span>SALA ${p.consultorio}</span></div>`;
-      });
-      document.getElementById("lista").innerHTML = html;
-
-      if (atual.id !== ultimoIdChamado) {
-        falarHumano(atual);
-        ultimoIdChamado = atual.id;
+function carregarDados() {
+  // Usando .then() em vez de async/await para maior compatibilidade
+  supabaseClient
+    .from("pacientes")
+    .select("*")
+    .order("id", { ascending: false })
+    .limit(6)
+    .then(function(response) {
+      if (response.error) {
+        console.log("Erro no Supabase:", response.error);
+        return;
       }
+      var data = response.data;
+      if (data && data.length > 0) {
+        var atual = data[0];
+        
+        // Atualiza a tela
+        document.getElementById("nome").innerText = atual.nome;
+        document.getElementById("info").innerText = "SALA " + atual.consultorio + " - " + atual.profissional;
+
+        var htmlAnteriores = "";
+        for (var i = 1; i < data.length; i++) {
+          htmlAnteriores += '<div class="lista-item"><span>' + data[i].nome + '</span><span>SALA ' + data[i].consultorio + '</span></div>';
+        }
+        document.getElementById("lista").innerHTML = htmlAnteriores;
+
+        // Verifica se precisa falar
+        if (atual.id !== ultimoId) {
+          falarNome(atual);
+          ultimoId = atual.id;
+        }
+      }
+    });
+}
+
+function falarNome(p) {
+  try {
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      var texto = p.nome + ". Sala " + p.consultorio;
+      var msg = new SpeechSynthesisUtterance(texto);
+      msg.lang = 'pt-BR';
+      msg.rate = 1.2;
+      window.speechSynthesis.speak(msg);
     }
-  } catch (err) { console.error(err); }
+  } catch (e) {
+    console.log("Voz não suportada nesta TV");
+  }
 }
 
-function falarHumano(p) {
-  window.speechSynthesis.cancel();
-  const texto = `${p.nome}. Consultório ${p.consultorio}. Profissional ${p.profissional}.`;
-  const msg = new SpeechSynthesisUtterance(texto);
-  msg.lang = 'pt-BR';
-  msg.rate = 1.3; 
-  
-  const vozes = window.speechSynthesis.getVoices();
-  const vozHumana = vozes.find(v => v.lang === 'pt-BR' && (v.name.includes('Google') || v.name.includes('Natural')));
-  if (vozHumana) msg.voice = vozHumana;
-
-  window.speechSynthesis.speak(msg);
-}
-
-window.speechSynthesis.onvoiceschanged = carregar;
-setInterval(carregar, 3000);
-carregar();
+// Inicia o ciclo
+setInterval(carregarDados, 5000); // 5 segundos para não sobrecarregar a TV
+carregarDados();
 </script>
-
 </body>
 </html>
